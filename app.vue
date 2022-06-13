@@ -7,43 +7,40 @@
         val.value++;
     }
 
-    const bar = (e: Event) => {
-        console.log(e);
+    const inputTypes = ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'month', 'number', 'password', 'radio', 'range', 'search', 'select', 'submit', 'tel', 'text', 'textarea', 'time', 'url', 'week']
+    const inputOptions = {
+        checkbox: ['I like Tailwind', 'I also like FormKit', 'I like other things too'],
+        radio: ['I like Tailwind', 'I like FormKit', 'I like everything'],
+        select: ['I like Tailwind', 'I like FormKit', 'I like everything'],
     }
 
-    const arr = [
-        {
-            id: 0,
-            text: "Pidor"
-        },
-        {
-            id: 1,
-            text: "Rukav"
-        },
-        {
-            id: 2,
-            text: "Timosh"
-        }
-    ]
 </script>
 
 <template>
     <div>
         <input type="text" v-bind:value="val">
-        <button v-on:click="increment">
-            click
-        </button>
-        <!-- <CustomButton v-if="val === 2">kek</CustomButton>
-        <div v-else-if="val === 3">Rukav pidor</div>
-        <div v-else>Timosh dai labu</div> -->
+        <div class="flex items-center">
+            <button v-on:click="increment" class=" p-4 bg-orange-700 max-w-xs rounded">
+                click
+            </button>
+        </div>
 
         <div>
-            <div v-for="el in arr" :key="el.id">
-                <CustomButton>
-                    <h4>{{ el.id }}</h4>
-                    <p>{{ el.text }}</p>
-                </CustomButton>
-            </div>
+
+            <FormKit
+                v-for="type in inputTypes"
+                :key="type"
+                :label="`This is a ${type} input`"
+                :type="type"
+                :placeholder="`${type} input placeholder`"
+                :options="inputOptions[type] ? inputOptions[type] : null"
+                :help="`Help text for the ${type} input`"
+                :multiple="type === 'file'"
+                :disabled="type === 'date' ? true : undefined"
+                :validation="type === 'email' ? 'required|email' : 'required'"
+                :validation-visibility="type === 'email' ? 'live' : 'blur'"
+                :validation-label="type"
+            />
         </div>
 
         <NuxtPage />
